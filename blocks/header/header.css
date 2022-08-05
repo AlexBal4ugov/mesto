@@ -1,0 +1,6 @@
+.header {
+  max-width: 880px;
+  min-height: 74px;
+  border-bottom: solid 1px #545454;
+  margin: 45px auto;
+}
