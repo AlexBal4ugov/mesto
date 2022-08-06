@@ -6,3 +6,7 @@
   border-radius: 2px;
   background-color: #000000;
 }
+
+.profile__add:hover {
+  opacity: 0.6;
+}
