@@ -5,8 +5,27 @@
   border: 2px solid #FFFFFF;
   border-radius: 2px;
   background-color: #000000;
+  background-image: url(../../../images/button-add.svg);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .profile__add:hover {
   opacity: 0.6;
 }
+
+@media screen and (max-width: 700px) {
+  .profile__add {
+    margin-right: 10px;
+    width: 282px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile__add {
+    background-size: 16px 16px;
+    margin: 32px 0 0px 0;
+  }
+}
+
+

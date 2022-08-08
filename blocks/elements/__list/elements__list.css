@@ -8,3 +8,17 @@
   row-gap: 20px;
   column-gap: 17px;
 }
+
+@media screen and (max-width: 890px) {
+  .elements__list {
+    row-gap: 14px;
+    column-gap: 11px;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .elements__list {
+    row-gap: 20px;
+  }
+}
