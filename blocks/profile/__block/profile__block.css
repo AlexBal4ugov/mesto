@@ -2,4 +2,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-right: 15px;
+}
+
+@media screen and (max-width: 700px) {
+  .profile__block {
+    margin: 0;
+  }
 }
