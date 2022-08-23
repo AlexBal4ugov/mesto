@@ -35,23 +35,41 @@ const cardTemplate = document.querySelector('#element_container').content;
 const cardsList = document.querySelector('.elements__list');
 
 initialCards.forEach(function (card) {
-  addCard(card);
+  const newCard = createCard(card);
+  cardsList.append(newCard);
 });
 
 
 let profileName = document.querySelector('.profile__name');
 let profileAbout =document.querySelector('.profile__about');
 
-let formElement = document.querySelector('.popup__form');
+let addFormElement = popupAdd.querySelector('.popup__form');
+let editFormElement = popupEdit.querySelector('.popup__form');
 let nameInput = document.querySelector('.popup__input_data_name');
 let aboutInput = document.querySelector('.popup__input_data_about');
+let nameImgInput = document.querySelector('.popup__input_data_img-name');
+let linkImgInput = document.querySelector('.popup__input_data_img-link');
 
-function addCard(card) {
+function createCard(card) {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   cardElement.querySelector('.element__photo').src = card.link;
   cardElement.querySelector('.element__photo').alt = card.name;
   cardElement.querySelector('.element__description').textContent = card.name;
-  cardsList.append(cardElement);
+  const likeButton = cardElement.querySelector('.element__like');
+  likeButton.addEventListener('click', onLikeButtonClick);
+  const deleteButton = cardElement.querySelector('.element__delete');
+  deleteButton.addEventListener('click', onDeleteButtonClick);
+  return cardElement;
+}
+
+function onDeleteButtonClick(evt) {
+  const deleteTarget = evt.target.closest('.element');
+  deleteTarget.remove();
+}
+
+function onLikeButtonClick(evt) {
+  const like = evt.target;
+  like.classList.toggle('element__like_active');
 }
 
 function onEditButtonClick() {
@@ -71,19 +89,33 @@ function onCloseButtonClick(evt) {
   parentPopup.classList.remove('popup_opened');
 }
 
-function formSubmitHandler(evt) {
+function editFormSubmitHandler(evt) {
   evt.preventDefault();
   let name = nameInput.value;
   let about = aboutInput.value;
   profileName.textContent = name;
   profileAbout.textContent = about;
-  onCloseButtonClick(popupEdit);
+  onCloseButtonClick(evt);
 }
 
+function addFormSubmitHandler(evt) {
+  evt.preventDefault();
+  let name = nameImgInput.value;
+  let link = linkImgInput.value;
+  const card = {
+    name: name,
+    link: link
+  }
+  const newCard = createCard(card);
+  cardsList.prepend(newCard);
+  onCloseButtonClick(evt);
+}
 
 closeEditButton.addEventListener('click', onCloseButtonClick);
 closeAddButton.addEventListener('click', onCloseButtonClick);
+
 editButton.addEventListener('click', onEditButtonClick);
-formElement.addEventListener('submit',formSubmitHandler);
 addButton.addEventListener('click', onAddButtonClick);
 
+editFormElement.addEventListener('submit',editFormSubmitHandler);
+addFormElement.addEventListener('submit',addFormSubmitHandler);
