@@ -2,8 +2,13 @@ const editButton = document.querySelector('.profile__edit');
 const addButton = document.querySelector('.profile__add');
 const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
+const popupImage = document.querySelector('.popup_image');
 const closeEditButton = popupEdit.querySelector('.popup__close');
 const closeAddButton = popupAdd.querySelector('.popup__close');
+const closeImageButton = popupImage.querySelector('.popup__close');
+
+
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -59,6 +64,8 @@ function createCard(card) {
   likeButton.addEventListener('click', onLikeButtonClick);
   const deleteButton = cardElement.querySelector('.element__delete');
   deleteButton.addEventListener('click', onDeleteButtonClick);
+  const cardImage = cardElement.querySelector('.element__photo-button');
+  cardImage.addEventListener('click', onImageButtonClick);
   return cardElement;
 }
 
@@ -89,6 +96,15 @@ function onCloseButtonClick(evt) {
   parentPopup.classList.remove('popup_opened');
 }
 
+function onImageButtonClick(evt) {
+  const target = evt.target.closest('.element');
+  const image = target.querySelector('.element__photo').src;
+  const title = target.querySelector('.element__description').textContent;
+  popupImage.querySelector('.popup__image-pic').src = image;
+  popupImage.querySelector('.popup__image-title').textContent = title;
+  popupImage.classList.add('popup_opened');
+}
+
 function editFormSubmitHandler(evt) {
   evt.preventDefault();
   let name = nameInput.value;
@@ -113,9 +129,11 @@ function addFormSubmitHandler(evt) {
 
 closeEditButton.addEventListener('click', onCloseButtonClick);
 closeAddButton.addEventListener('click', onCloseButtonClick);
+closeImageButton.addEventListener('click',onCloseButtonClick);
 
 editButton.addEventListener('click', onEditButtonClick);
 addButton.addEventListener('click', onAddButtonClick);
 
 editFormElement.addEventListener('submit',editFormSubmitHandler);
 addFormElement.addEventListener('submit',addFormSubmitHandler);
+
