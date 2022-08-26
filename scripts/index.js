@@ -102,7 +102,7 @@ function handleAddButtonClick() {
   openPopup(popupAdd);
 }
 
-function handleCloseButtonClick(evt) {
+function handlePopupClose(evt) {
   const parentPopup = evt.target.closest('.popup');
   closePopup(parentPopup);
 }
@@ -114,7 +114,7 @@ function handleImageButtonClick(evt) {
   popupImagePic.src = image;
   popupImagePic.alt = title;
   popupImageTitle.textContent = title;
-  popupImage.classList.add('popup_opened');
+  openPopup(popupImage);
 }
 
 function handleFormSubmit(evt) {
@@ -123,7 +123,7 @@ function handleFormSubmit(evt) {
   const about = aboutInput.value;
   profileName.textContent = name;
   profileAbout.textContent = about;
-  handleCloseButtonClick(evt);
+  handlePopupClose(evt);
 }
 
 function handleAddFormSubmit(evt) {
@@ -138,12 +138,12 @@ function handleAddFormSubmit(evt) {
   cardsList.prepend(newCard);
   nameImgInput.value = '';
   linkImgInput.value = '';
-  handleCloseButtonClick(evt);
+  handlePopupClose(evt);
 }
 
-closeEditButton.addEventListener('click', handleCloseButtonClick);
-closeAddButton.addEventListener('click', handleCloseButtonClick);
-closeImageButton.addEventListener('click',handleCloseButtonClick);
+closeEditButton.addEventListener('click', handlePopupClose);
+closeAddButton.addEventListener('click', handlePopupClose);
+closeImageButton.addEventListener('click',handlePopupClose);
 
 editButton.addEventListener('click', handleEditButtonClick);
 addButton.addEventListener('click', handleAddButtonClick);
