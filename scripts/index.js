@@ -72,12 +72,28 @@ function createCard(card) {
   return cardElement;
 }
 
+function handleEsc(evt) {
+  const openedPopup = document.querySelector('.popup_opened');
+  const key = evt.key;
+    if (key === "Escape") {
+      closePopup(openedPopup);
+    }
+}
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  popup.addEventListener('click', function(evt) {
+    const target = evt.target;
+    if (target.classList.contains('popup')) {
+      closePopup(popup);
+    }
+  });
+  document.addEventListener('keydown', handleEsc);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleEsc);
 }
 
 function handleDeleteButtonClick(evt) {
@@ -104,6 +120,10 @@ function handleAddButtonClick() {
 
 function handlePopupClose(evt) {
   const parentPopup = evt.target.closest('.popup');
+  const form = parentPopup.querySelector(validationConfig.formSelector);
+  if (form) {
+    resetError(form, validationConfig);
+  }
   closePopup(parentPopup);
 }
 
@@ -150,4 +170,3 @@ addButton.addEventListener('click', handleAddButtonClick);
 
 editFormElement.addEventListener('submit',handleFormSubmit);
 addFormElement.addEventListener('submit',handleAddFormSubmit);
-
