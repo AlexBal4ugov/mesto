@@ -13,7 +13,7 @@ function resetError(form, config) {
     hideError(form, input, config);
   });
   const button = form.querySelector(config.submitButtonSelector);
-  handleActiveButton(button, config);
+  enableSubmitButton(button, config);
 }
 
 function setError(form, input, config){
@@ -38,12 +38,12 @@ function validateInput(form, input, config) {
   }
 }
 
-function handleInactiveButton(button, config) {
+function disableSubmitButton(button, config) {
   button.classList.add(config.inactiveButtonClass);
   button.disabled = true;
 }
 
-function handleActiveButton(button, config) {
+function enableSubmitButton(button, config) {
   button.classList.remove(config.inactiveButtonClass);
   button.disabled = false;
 }
@@ -51,9 +51,9 @@ function handleActiveButton(button, config) {
 function setButtonState(inputs, button, config) {
   const hasErrors = inputs.some(input => !input.validity.valid);
   if (hasErrors) {
-    handleInactiveButton(button, config);
+    disableSubmitButton(button, config);
   } else {
-    handleActiveButton(button, config);
+    enableSubmitButton(button, config);
   }
 }
 
