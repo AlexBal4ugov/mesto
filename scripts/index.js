@@ -112,10 +112,6 @@ function handleAddButtonClick() {
 
 function handlePopupClose(evt) {
   const parentPopup = evt.target.closest(".popup");
-  const form = parentPopup.querySelector(validationConfig.formSelector);
-  if (form) {
-    resetError(form, validationConfig);
-  }
   closePopup(parentPopup);
 }
 
@@ -136,6 +132,7 @@ function handleEditFormSubmit(evt) {
   profileName.textContent = name;
   profileAbout.textContent = about;
   handlePopupClose(evt);
+  resetError(formEditProfile, validationConfig);
 }
 
 function handleAddFormSubmit(evt) {
@@ -151,6 +148,7 @@ function handleAddFormSubmit(evt) {
   nameImgInput.value = "";
   linkImgInput.value = "";
   handlePopupClose(evt);
+  resetError(formAddCard, validationConfig);
 }
 
 function handleOverlayClose(popup, evt) {
