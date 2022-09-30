@@ -1,48 +1,20 @@
+import Card from "./Card.js";
+import { initialCards } from "./initialCards.js";
+
 const buttonEdit = document.querySelector(".profile__edit");
 const buttonAdd = document.querySelector(".profile__add");
 const popupEdit = document.querySelector(".popup_edit");
 const popupAdd = document.querySelector(".popup_add");
 const popupImage = document.querySelector(".popup_image");
-const popupImagePic = popupImage.querySelector(".popup__image-pic");
-const popupImageTitle = popupImage.querySelector(".popup__image-title");
 const buttonEditClose = popupEdit.querySelector(".popup__close");
 const buttonAddClose = popupAdd.querySelector(".popup__close");
 const buttonImageClose = popupImage.querySelector(".popup__close");
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
-const cardTemplate = document.querySelector("#element_container").content;
-const cardTemplateElement = cardTemplate.querySelector(".element");
 const cardsList = document.querySelector(".elements__list");
 
 initialCards.forEach(function (card) {
-  const newCard = createCard(card);
-  cardsList.append(newCard);
+  const newCard = new Card(card, '#element_container');
+  cardsList.append(newCard.generateCard());
 });
 
 const profileName = document.querySelector(".profile__name");
@@ -54,21 +26,6 @@ const nameInput = document.querySelector(".popup__input_data_name");
 const aboutInput = document.querySelector(".popup__input_data_about");
 const nameImgInput = document.querySelector(".popup__input_data_img-name");
 const linkImgInput = document.querySelector(".popup__input_data_img-link");
-
-function createCard(card) {
-  const cardElement = cardTemplateElement.cloneNode(true);
-  const cardPhoto = cardElement.querySelector(".element__photo");
-  cardPhoto.src = card.link;
-  cardPhoto.alt = card.name;
-  cardElement.querySelector(".element__description").textContent = card.name;
-  const likeButton = cardElement.querySelector(".element__like");
-  likeButton.addEventListener("click", handleLikeButtonClick);
-  const deleteButton = cardElement.querySelector(".element__delete");
-  deleteButton.addEventListener("click", handleDeleteButtonClick);
-  const cardImage = cardElement.querySelector(".element__photo-button");
-  cardImage.addEventListener("click", handleImageButtonClick);
-  return cardElement;
-}
 
 function handleEsc(evt) {
   const openedPopup = document.querySelector(".popup_opened");
@@ -88,16 +45,6 @@ function closePopup(popup) {
   document.removeEventListener("keydown", handleEsc);
 }
 
-function handleDeleteButtonClick(evt) {
-  const deleteTarget = evt.target.closest(".element");
-  deleteTarget.remove();
-}
-
-function handleLikeButtonClick(evt) {
-  const like = evt.target;
-  like.classList.toggle("element__like_active");
-}
-
 function handleEditButtonClick() {
   openPopup(popupEdit);
   const name = profileName.textContent;
@@ -113,16 +60,6 @@ function handleAddButtonClick() {
 function handlePopupClose(evt) {
   const parentPopup = evt.target.closest(".popup");
   closePopup(parentPopup);
-}
-
-function handleImageButtonClick(evt) {
-  const target = evt.target.closest(".element");
-  const image = target.querySelector(".element__photo").src;
-  const title = target.querySelector(".element__description").textContent;
-  popupImagePic.src = image;
-  popupImagePic.alt = title;
-  popupImageTitle.textContent = title;
-  openPopup(popupImage);
 }
 
 function handleEditFormSubmit(evt) {
@@ -143,8 +80,8 @@ function handleAddFormSubmit(evt) {
     name: name,
     link: link,
   };
-  const newCard = createCard(card);
-  cardsList.prepend(newCard);
+  const newCard = new Card(card, '#element_container');
+  cardsList.prepend(newCard.generateCard());
   nameImgInput.value = "";
   linkImgInput.value = "";
   handlePopupClose(evt);
@@ -179,3 +116,5 @@ popupAdd.addEventListener("mousedown", function (evt) {
 popupImage.addEventListener("mousedown", function (evt) {
   handleOverlayClose(popupImage, evt);
 });
+
+export { openPopup };
