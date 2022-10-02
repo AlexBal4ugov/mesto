@@ -1,5 +1,7 @@
 import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 import { initialCards } from "./initialCards.js";
+import { validationConfig } from "./validationConfig.js";
 
 const buttonEdit = document.querySelector(".profile__edit");
 const buttonAdd = document.querySelector(".profile__add");
@@ -27,6 +29,12 @@ const aboutInput = document.querySelector(".popup__input_data_about");
 const nameImgInput = document.querySelector(".popup__input_data_img-name");
 const linkImgInput = document.querySelector(".popup__input_data_img-link");
 
+const formAddValidator = new FormValidator(validationConfig, formAddCard);
+formAddValidator.enableValidation();
+
+const formEditValidator = new FormValidator(validationConfig, formEditProfile);
+formEditValidator.enableValidation();
+
 function handleEsc(evt) {
   const openedPopup = document.querySelector(".popup_opened");
   const key = evt.key;
@@ -43,6 +51,8 @@ function openPopup(popup) {
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", handleEsc);
+  formEditValidator.resetError();
+  formAddValidator.resetError();
 }
 
 function handleEditButtonClick() {
@@ -69,7 +79,6 @@ function handleEditFormSubmit(evt) {
   profileName.textContent = name;
   profileAbout.textContent = about;
   handlePopupClose(evt);
-  resetError(formEditProfile, validationConfig);
 }
 
 function handleAddFormSubmit(evt) {
@@ -85,7 +94,6 @@ function handleAddFormSubmit(evt) {
   nameImgInput.value = "";
   linkImgInput.value = "";
   handlePopupClose(evt);
-  resetError(formAddCard, validationConfig);
 }
 
 function handleOverlayClose(popup, evt) {
