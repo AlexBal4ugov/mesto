@@ -11,6 +11,8 @@ const popupImage = document.querySelector(".popup_image");
 const buttonEditClose = popupEdit.querySelector(".popup__close");
 const buttonAddClose = popupAdd.querySelector(".popup__close");
 const buttonImageClose = popupImage.querySelector(".popup__close");
+const popupImagePic = popupImage.querySelector(".popup__image-pic");
+const popupImageTitle = popupImage.querySelector(".popup__image-title");
 
 const cardsList = document.querySelector(".elements__list");
 
@@ -36,9 +38,9 @@ const formEditValidator = new FormValidator(validationConfig, formEditProfile);
 formEditValidator.enableValidation();
 
 function handleEsc(evt) {
-  const openedPopup = document.querySelector(".popup_opened");
   const key = evt.key;
   if (key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
 }
@@ -51,19 +53,19 @@ function openPopup(popup) {
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", handleEsc);
-  formEditValidator.resetError();
-  formAddValidator.resetError();
 }
 
 function handleEditButtonClick() {
-  openPopup(popupEdit);
+  formEditValidator.resetError();
   const name = profileName.textContent;
   nameInput.value = name;
   const about = profileAbout.textContent;
   aboutInput.value = about;
+  openPopup(popupEdit);
 }
 
 function handleAddButtonClick() {
+  formAddValidator.resetError();
   openPopup(popupAdd);
 }
 
@@ -125,4 +127,4 @@ popupImage.addEventListener("mousedown", function (evt) {
   handleOverlayClose(popupImage, evt);
 });
 
-export { openPopup };
+export { openPopup, popupImage, popupImagePic, popupImageTitle };

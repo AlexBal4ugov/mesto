@@ -1,4 +1,4 @@
-import { openPopup } from "./index.js";
+import { openPopup, popupImage, popupImagePic, popupImageTitle } from "./index.js";
 
 export default class Card {
   constructor(data, template){
@@ -21,16 +21,10 @@ export default class Card {
     deleteTarget.remove();
   }
 
-  _handleImageButtonClick(evt) {
-    const popupImage = document.querySelector(".popup_image");
-    const popupImagePic = popupImage.querySelector(".popup__image-pic");
-    const popupImageTitle = popupImage.querySelector(".popup__image-title");
-    const target = evt.target.closest(".element");
-    const image = target.querySelector(".element__photo").src;
-    const title = target.querySelector(".element__description").textContent;
-    popupImagePic.src = image;
-    popupImagePic.alt = title;
-    popupImageTitle.textContent = title;
+  _handleImageButtonClick = (evt) => {
+    popupImagePic.src = this._data.link;
+    popupImagePic.alt = this._data.name;
+    popupImageTitle.textContent = this._data.name;
     openPopup(popupImage);
   }
 
